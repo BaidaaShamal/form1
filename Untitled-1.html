@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamically Add Remove Table Rows in JavaScript</title>
+
+    
+</head>
+<body onload="createTable()">
+
+    <button id="addRow" onclick="addRow()">click</button>
+    <button id="submit" onclick="submit()">click</button>
+   
+    <div id="cont"> 
+        <table class="table table-sm table-dark" >
+
+        </table>
+    </div>   <!--the container to add the table.-->
+
+</body>
+
+<script>
+    var arrHead = new Array();
+    arrHead = ['Going To', 'Check In','Check Out']; // table headers.
+
+    // first create a TABLE structure by adding few headers.
+    function createTable() {
+        var empTable = document.createElement('table');
+        empTable.setAttribute('id', 'empTable');  // table id.
+
+        var tr = empTable.insertRow(-1);
+
+        for (var h = 0; h < arrHead.length; h++) {
+            var th = document.createElement('th'); // the header object.
+            th.innerHTML = arrHead[h];
+            tr.appendChild(th);
+        }
+
+        var div = document.getElementById('cont');
+        div.appendChild(empTable);    // add table to a container.
+    }
+
+    // function to add new row.
+    function addRow() {
+        var empTab = document.getElementById('empTable');
+
+        var rowCnt = empTab.rows.length;    // get the number of rows.
+        var tr = empTab.insertRow(rowCnt); // table row.
+        tr = empTab.insertRow(rowCnt);
+
+        for (var c = 0; c < arrHead.length; c++) {
+            var td = document.createElement('td');          // TABLE DEFINITION.
+            td = tr.insertCell(c);
+            var ele = document.createElement('input');
+                ele.setAttribute('type', 'text');
+                ele.setAttribute('value', '');
+                td.appendChild(ele);
+         
+        }
+    }
+
+  
+
+    function submit() {
+        var myTab = document.getElementById('empTable');
+        var arrValues = new Array();
+
+        // loop through each row of the table.
+        for (row = 1; row < myTab.rows.length - 1; row++) {
+            // loop through each cell in a row.
+            for (c = 0; c < myTab.rows[row].cells.length; c++) {
+                var element = myTab.rows.item(row).cells[c];
+                if (element.childNodes[0].getAttribute('type') == 'text') {
+                    arrValues.push("'" + element.childNodes[0].value + "'");
+                }
+            }
+        }
+        
+        // finally, show the result in the console.
+        console.log(arrValues);
+    }
+
+  
+</script>
+</html>
